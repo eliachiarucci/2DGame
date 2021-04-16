@@ -26,7 +26,7 @@ public class DoorController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(PlayerController.instance.comingFrom == doorName)
+        if(PlayerController.instance != null && PlayerController.instance.comingFrom == doorName)
         {
             PlayerController.instance.transform.position = transform.position + getOffset();
         }

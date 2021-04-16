@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        CameraController.target = transform;
     }
 
     // Update is called once per frame
