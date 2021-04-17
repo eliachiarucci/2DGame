@@ -10,16 +10,21 @@ public class DialogManager : MonoBehaviour
     public GameObject nameBox;
     public GameObject dialogBox;
     public static DialogManager instance;
-    private InputMaster controls;
     public string[] dialogLines;
     public int currentLine = 0;
-
-    private bool justStarted = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     public void DialogStep()
@@ -51,7 +56,6 @@ public class DialogManager : MonoBehaviour
     {
         dialogLines = newLines;
         currentLine = 0;
-        justStarted = true;
         dialogBox.SetActive(true);
         PlayerController.instance.canMove = false;
     }
