@@ -6,11 +6,10 @@ using UnityEngine.Tilemaps;
 public class CameraController : MonoBehaviour
 {
 
-    public static Transform target;
-
+    public Transform target;
     public Tilemap tileMap;
-    private Vector3 bottomLeftLimit;
-    private Vector3 topRightLimit;
+    public Vector3 bottomLeftLimit;
+    public Vector3 topRightLimit;
     private float halfHeight;
     private float halfWidth;
 
@@ -29,7 +28,6 @@ public class CameraController : MonoBehaviour
         if (target)
         {
             transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
-
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeftLimit.x, topRightLimit.x), Mathf.Clamp(transform.position.y, bottomLeftLimit.y, topRightLimit.y), transform.position.z);
         }
     }

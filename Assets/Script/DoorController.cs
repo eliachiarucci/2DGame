@@ -23,16 +23,19 @@ public class DoorController : MonoBehaviour
     public int offsetAmount;
 
     public Direction exitDirection;
+
+    private float waitToLoad;
     // Start is called before the first frame update
     void Start()
     {
         if(PlayerController.instance != null && PlayerController.instance.comingFrom == doorName)
         {
-            PlayerController.instance.transform.position = transform.position + getOffset();
+            PlayerController.instance.transform.position = transform.position + GetOffset();
+            UIFade.instance.setLoading(false);
         }
     }
 
-    Vector3 getOffset()
+    Vector3 GetOffset()
     {
         switch (exitDirection)
         {
@@ -52,15 +55,19 @@ public class DoorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (UIFade.instance.loading && UIFade.instance.fadeScreen.color.a == 1)
+        {
+            UIFade.instance.setLoading(false);
+            SceneManager.LoadScene(areaToLoad);
+            PlayerController.instance.comingFrom = goesTo; 
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {
-            SceneManager.LoadScene(areaToLoad);
-            PlayerController.instance.comingFrom = goesTo;
+            UIFade.instance.setLoading(true);
         }
     }
 
