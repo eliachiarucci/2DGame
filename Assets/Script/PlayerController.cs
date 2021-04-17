@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    InputMaster controls;
     public Rigidbody2D PlayerRigidbody;
     public float movementSpeed;
 
@@ -18,14 +17,11 @@ public class PlayerController : MonoBehaviour
     public Vector3 bottomLeftLimit;
     public Vector3 topRightLimit;
 
+    private Vector2 inputMovement;
+
     public bool canMove = true;
 
     public GameObject currentTarget;
-
-    private void Awake()
-    {
-
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -40,14 +36,8 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-    }
-
-    public void OnMovement(InputAction.CallbackContext value)
-    {
-        Vector2 inputMovement = value.ReadValue<Vector2>();
         if (UIFade.instance.loading == false && canMove)
         {
             PlayerRigidbody.velocity = inputMovement * movementSpeed;
@@ -66,7 +56,18 @@ public class PlayerController : MonoBehaviour
 
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, bottomLeftLimit.x, topRightLimit.x), Mathf.Clamp(transform.position.y, bottomLeftLimit.y, topRightLimit.y), transform.position.z);
+    }
 
+    public void OnMovement(InputAction.CallbackContext value)
+    {
+        if (value.performed)
+        {
+            inputMovement = value.ReadValue<Vector2>();
+            
+        } else if (value.canceled)
+        {
+            inputMovement = Vector2.zero;
+        }
     }
 
     public void OnAction(InputAction.CallbackContext value)
