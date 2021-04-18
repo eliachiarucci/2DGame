@@ -53,6 +53,7 @@ public class CharStats : MonoBehaviour
         calculateAbilityStats();
         calculateMaxBaseStats();
         calculateStatsAbilityToSpend();
+        GameMenu.instance.UpdateMainStats();
     }
 
     void calculateExpForLevels()
@@ -83,6 +84,27 @@ public class CharStats : MonoBehaviour
             newLevel(maxLevel);
         }
         return;
+    }
+
+    public int[] getCurrentLevelExp()
+    {
+        int totalExpRequiredForNextLevel = 0;
+        int totalExpRequiredBeforeThisLevel = 0;
+        int[] expArray;
+        for (int i = 0; i < expToNextLevel.Count; i++)
+        {
+            totalExpRequiredForNextLevel += expToNextLevel[i];
+            if (currentExp < totalExpRequiredForNextLevel)
+            {
+                totalExpRequiredBeforeThisLevel = totalExpRequiredForNextLevel - expToNextLevel[i];
+                int expRequiredForThisLevel = totalExpRequiredForNextLevel - totalExpRequiredBeforeThisLevel;
+                int playerExpInThisLevel = currentExp - totalExpRequiredBeforeThisLevel;
+                expArray = new int[] {playerExpInThisLevel, expRequiredForThisLevel };
+                return expArray;
+            }
+        }
+        expArray = new int[] { 0, 0 };
+        return expArray;
     }
 
     public void AddExp(int expToAdd)
