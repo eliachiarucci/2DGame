@@ -1,34 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMenu : MonoBehaviour
 {
     public GameObject menu;
+    public static GameMenu instance;
+    private CharStats[] playerStats;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Action()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (menu.activeInHierarchy)
         {
-            if(menu.activeInHierarchy)
-            {
-                menu.SetActive(false);
-            } else
-            {
-                menu.SetActive(true);
-            }
+            menu.SetActive(false);
+            GameManager.instance.gameMenuOpen = false;
+        }
+        else
+        {
+            menu.SetActive(true);
+            GameManager.instance.gameMenuOpen = true;
         }
     }
 
-    void onMenuOpen()
+    public void UpdateMainStats()
     {
-
+        playerStats = GameManager.instance.playerStats;
     }
+
 }

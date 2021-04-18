@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody2D PlayerRigidbody;
-    public float movementSpeed;
+    private float movementSpeed;
 
     public Animator PlayerAnimator;
 
@@ -14,14 +14,14 @@ public class PlayerController : MonoBehaviour
 
     public string comingFrom;
 
-    public Vector3 bottomLeftLimit;
-    public Vector3 topRightLimit;
+    private Vector3 bottomLeftLimit;
+    private Vector3 topRightLimit;
 
-    private Vector2 inputMovement;
+    public Vector2 inputMovement;
 
     public bool canMove = true;
 
-    public GameObject currentTarget;
+    private GameObject currentTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -34,11 +34,12 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        movementSpeed = 4f;
     }
 
-    private void Update()
+    void Update()
     {
-        if (UIFade.instance.loading == false && canMove)
+        if (canMove)
         {
             PlayerRigidbody.velocity = inputMovement * movementSpeed;
             if (inputMovement.x == 1 || inputMovement.x == -1 || inputMovement.y == 1 || inputMovement.y == -1)
@@ -76,6 +77,24 @@ public class PlayerController : MonoBehaviour
         {
             currentTarget.GetComponent<DialogActivator>().Action();
         }
+    }
+
+    public void OnMenuButton(InputAction.CallbackContext value)
+    {
+        if(value.performed)
+        {
+            GameMenu.instance.Action();
+        }
+    }
+
+    public void setBottomLeftLimit(Vector3 bottomLeftLimitFromLoader)
+    {
+        bottomLeftLimit = bottomLeftLimitFromLoader;
+    }
+
+    public void setTopRightLimit(Vector3 topRightLimitFromLoader)
+    {
+        topRightLimit = topRightLimitFromLoader;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

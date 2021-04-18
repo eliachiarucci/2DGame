@@ -46,9 +46,9 @@ public class DialogManager : MonoBehaviour
         {
             dialogBox.SetActive(false);
             currentLine = 0;
-            PlayerController.instance.canMove = true;
+            GameManager.instance.dialogActive = false;
         }
-        
+
     }
    
 
@@ -57,6 +57,6 @@ public class DialogManager : MonoBehaviour
         dialogLines = newLines;
         currentLine = 0;
         dialogBox.SetActive(true);
-        PlayerController.instance.canMove = false;
+        GameManager.instance.dialogActive = true;
     }
 }

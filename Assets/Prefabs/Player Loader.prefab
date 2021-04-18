@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 110189141914216476, guid: 0955bc79a44b5c54880a3ac44c51e886, type: 3}
-  uiFade: {fileID: 8652800483637759681, guid: f5affea89a0be1247befc138118a14de, type: 3}
+  UI: {fileID: 8652800483637759681, guid: f5affea89a0be1247befc138118a14de, type: 3}
   isStartingPoint: 0
+  gameManager: {fileID: 4254890149745954484, guid: 0ee2242d1270e2f47b8c401467772d52, type: 3}

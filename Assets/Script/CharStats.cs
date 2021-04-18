@@ -34,7 +34,6 @@ public class CharStats : MonoBehaviour
 
     public Sprite charImage;
 
-    // Start is called before the first frame update
     void Start()
     {
         calculateExpForLevels();
@@ -44,19 +43,11 @@ public class CharStats : MonoBehaviour
         calculateStatsAbilityToSpend();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            AddExp(300);
-        }
-    }
-
     void newLevel(int newLevel)
     {
-        if(playerLevel != 0)
+        if(playerLevel != 0) //If it is loading the exp for the first time the playerLevel will be 0, we don't want to trigger any new level functions.
         {
-            Debug.Log("NEW LEVEL!");
+            //newLevel
         }
         playerLevel = newLevel;
         calculateAbilityStats();

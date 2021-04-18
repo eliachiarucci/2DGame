@@ -6,10 +6,15 @@ public class PlayerLoader : MonoBehaviour
 {
 
     public GameObject player;
-    public GameObject uiFade;
+    public GameObject UI;
     public bool isStartingPoint;
     private GameObject spawnedPlayer;
     public GameObject gameManager;
+
+    private void Awake()
+    {
+        QualitySettings.vSyncCount = 1;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +30,7 @@ public class PlayerLoader : MonoBehaviour
 
         if (UIFade.instance is null)
         {
-            Instantiate(uiFade);
+            Instantiate(UI);
         }
 
         if (GameManager.instance is null)
@@ -41,8 +46,8 @@ public class PlayerLoader : MonoBehaviour
         PlayerController playerController = spawnedPlayer.GetComponent<PlayerController>();
         CameraController playerCamera = Camera.main.GetComponent<CameraController>();
         playerCamera.target = spawnedPlayer.transform;
-        playerController.bottomLeftLimit = playerCamera.tileMap.localBounds.min + new Vector3(0.5f, 1f, 0f);
-        playerController.topRightLimit = playerCamera.tileMap.localBounds.max + new Vector3(-0.7f, -0.7f, -0f);
+        playerController.setBottomLeftLimit(playerCamera.tileMap.localBounds.min + new Vector3(0.5f, 1f, 0f));
+        playerController.setTopRightLimit(playerCamera.tileMap.localBounds.max + new Vector3(-0.7f, -0.7f, -0f));
     }
 
     // Update is called once per frame

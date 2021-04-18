@@ -58,6 +58,7 @@ public class DoorController : MonoBehaviour
         if (UIFade.instance.loading && UIFade.instance.fadeScreen.color.a == 1)
         {
             UIFade.instance.setLoading(false);
+            GameManager.instance.fadingBetweenAreas = false;
             SceneManager.LoadScene(areaToLoad);
             PlayerController.instance.comingFrom = goesTo; 
         }
@@ -68,6 +69,7 @@ public class DoorController : MonoBehaviour
         if(other.tag == "Player")
         {
             UIFade.instance.setLoading(true);
+            GameManager.instance.fadingBetweenAreas = true;
         }
     }
 
