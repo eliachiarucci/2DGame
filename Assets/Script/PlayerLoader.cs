@@ -9,6 +9,7 @@ public class PlayerLoader : MonoBehaviour
     public GameObject uiFade;
     public bool isStartingPoint;
     private GameObject spawnedPlayer;
+    public GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,11 @@ public class PlayerLoader : MonoBehaviour
         if (UIFade.instance is null)
         {
             Instantiate(uiFade);
+        }
+
+        if (GameManager.instance is null)
+        {
+            Instantiate(gameManager);
         }
 
         if (isStartingPoint)
