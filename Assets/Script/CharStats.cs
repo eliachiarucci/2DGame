@@ -21,13 +21,17 @@ public class CharStats : MonoBehaviour
     public int stamina;
     public int strength;
     public int magicPower;
+    public int agility;
     public int physicalDefense;
     public int magicalDefense;
 
+    public int block;
+    public int dodge;
+    public int critChance;
+
     public int statsPointsAvailable = 0;
 
-    public int weapon;
-    public int armor;
+    public int weaponDamage;
 
     public string equippedWeapon;
     public string equippedArmor;
@@ -118,6 +122,7 @@ public class CharStats : MonoBehaviour
         stamina = statsStartingValue;
         strength = statsStartingValue;
         magicPower = statsStartingValue;
+        agility = statsStartingValue;
         physicalDefense = statsStartingValue;
         magicalDefense = statsStartingValue;
     }
