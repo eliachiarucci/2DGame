@@ -19,6 +19,8 @@ public class GameMenu : MonoBehaviour
     public Text statusPointsAvailable, statusCriticalChance, statusName, statusMP, statusBlock, statusDodge, statusAgility, statusStr, statusStamina, statusPhysicalDef, statusMagicalDef, statusMagicalDamage, statusWeaponDamage, statusWeaponEquipped, statusArmorEquipped, statusExp, statusLevel;
     public Image statusImage;
 
+    public ItemButton[] itemButtons;
+
     private void Start()
     {
         instance = this;
@@ -104,6 +106,25 @@ public class GameMenu : MonoBehaviour
             {
                 windows[i].SetActive(false);
             } 
+        }
+    }
+
+    public void ShowItems()
+    {
+        for (int i = 0; i < itemButtons.Length; i++)
+        {
+            itemButtons[i].buttonValue = i;
+            GameManager gameManager = GameManager.instance;
+            if(gameManager.itemsHeld[i] != "")
+            {
+                itemButtons[i].buttonImage.gameObject.SetActive(true);
+                itemButtons[i].buttonImage.sprite = gameManager.getItemDetails(gameManager.itemsHeld[i]).itemSprite;
+                itemButtons[i].amountText.text = gameManager.numberOfItems[i].ToString();
+            } else
+            {
+                itemButtons[i].buttonImage.gameObject.SetActive(false);
+                itemButtons[i].amountText.text = "";
+            }
         }
     }
 

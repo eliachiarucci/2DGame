@@ -54,11 +54,14 @@ MonoBehaviour:
   stamina: 0
   strength: 0
   magicPower: 0
+  agility: 0
   physicalDefense: 0
   magicalDefense: 0
+  block: 0
+  dodge: 0
+  critChance: 0
   statsPointsAvailable: 0
-  weapon: 0
-  armor: 0
+  weaponDamage: 0
   equippedWeapon: 
   equippedArmor: 
   charImage: {fileID: 21300000, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
@@ -112,6 +115,39 @@ MonoBehaviour:
   - {fileID: 4254890150307517709}
   - {fileID: 4254890149106775680}
   - {fileID: 4254890150243694404}
+  itemsHeld:
+  - 
+  - 
+  - 
+  - Health Potion
+  - 
+  - 
+  - Iron Armor
+  - 
+  - 
+  - Health Potion
+  - Wooden Sword
+  - 
+  - Leather Armor
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Mana Potion
+  - 
+  - 
+  - 
+  - 
+  - 
+  numberOfItems: 000000000000000000000000030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  referenceItem:
+  - {fileID: 5989332509414074224, guid: 17fdf93ddeb0a194cbf64c1f5cb8ceb1, type: 3}
+  - {fileID: 270915146796811841, guid: 56ec8a87b4fe3e243a8bf7cf43b7298f, type: 3}
+  - {fileID: 5864283245317640167, guid: 2d4a01cc6e6858c418948fec34894591, type: 3}
+  - {fileID: 1709585818201637227, guid: 66cc1711fa457624788c1bde205ecc99, type: 3}
+  - {fileID: 3002331323440568976, guid: 2a5d88aa3b4fc2b459077726e473481b, type: 3}
+  - {fileID: 2073741572203318648, guid: c7bc32be93a524042b19b715cbacb775, type: 3}
   dialogActive: 0
   gameMenuOpen: 0
   fadingBetweenAreas: 0
@@ -169,11 +205,14 @@ MonoBehaviour:
   stamina: 0
   strength: 0
   magicPower: 0
+  agility: 0
   physicalDefense: 0
   magicalDefense: 0
+  block: 0
+  dodge: 0
+  critChance: 0
   statsPointsAvailable: 0
-  weapon: 0
-  armor: 0
+  weaponDamage: 0
   equippedWeapon: 
   equippedArmor: 
   charImage: {fileID: 21300000, guid: e0ddba6d3fcf21f49949fcc95c849aac, type: 3}
@@ -231,11 +270,14 @@ MonoBehaviour:
   stamina: 0
   strength: 0
   magicPower: 0
+  agility: 0
   physicalDefense: 0
   magicalDefense: 0
+  block: 0
+  dodge: 0
+  critChance: 0
   statsPointsAvailable: 0
-  weapon: 0
-  armor: 0
+  weaponDamage: 0
   equippedWeapon: 
   equippedArmor: 
   charImage: {fileID: 7152930139536384079, guid: b88c8b72b76408f4c806d38b7c80aae4, type: 3}
