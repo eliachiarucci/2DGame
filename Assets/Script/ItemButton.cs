@@ -9,6 +9,7 @@ public class ItemButton : MonoBehaviour
     public Image buttonImage;
     public Text amountText;
     public int buttonValue;
+    public Outline outline;
 
     // Start is called before the first frame update
     void Start()

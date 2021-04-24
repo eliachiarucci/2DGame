@@ -16,13 +16,16 @@ public class GameMenu : MonoBehaviour
     public Image[] charImage;
     public GameObject[] charStatHolder;
 
-    public Text statusPointsAvailable, statusCriticalChance, statusName, statusMP, statusBlock, statusDodge, statusAgility, statusStr, statusStamina, statusPhysicalDef, statusMagicalDef, statusMagicalDamage, statusWeaponDamage, statusWeaponEquipped, statusArmorEquipped, statusExp, statusLevel;
+    public Text statusPointsAvailable, statusCriticalChance, statusName, statusMP, statusBlock, statusDodge, statusAgility, statusStr, statusStamina, statusPhysicalDef, statusMagicalDef, statusMagicalDamage, statusWeaponDamage, statusFirstHandEquipped, statusSecondHandEquipped, statusArmorEquipped, statusExp, statusLevel;
     public Image statusImage;
 
     public ItemButton[] itemButtons;
 
     public Item activeItem;
     public Text itemName, itemDescription, itemPrice, useButtonText, stat1, stat2, stat3, stat4, stat5, stat6, stat7;
+
+    public GameObject itemCharacterChoiceMenu;
+    public Text[] itemCharacterChoiceNames;
 
     private void Start()
     {
@@ -54,6 +57,7 @@ public class GameMenu : MonoBehaviour
         {
             windows[i].SetActive(false);
         }
+        itemCharacterChoiceMenu.SetActive(false);
         GameManager.instance.gameMenuOpen = false;
     }
 
@@ -89,27 +93,35 @@ public class GameMenu : MonoBehaviour
                 windows[i].SetActive(!windows[i].activeInHierarchy);
                 if (windowNumber == 1)
                 {
-                    statusName.text = playerStats[0].charName;
-                    statusLevel.text = "Level: " + playerStats[0].playerLevel.ToString();
-                    statusExp.text = "Experience: " + playerStats[0].getCurrentLevelExp()[0] + "/" + playerStats[0].getCurrentLevelExp()[1];
-                    statusWeaponDamage.text = "Physical Damage: " + playerStats[0].weaponDamage.ToString();
-                    statusPhysicalDef.text = "Physical Def: " + playerStats[0].physicalDefense.ToString();
-                    statusMagicalDef.text = "Magic Def: " + playerStats[0].magicalDefense.ToString();
-                    statusMP.text = playerStats[0].magicPower.ToString();
-                    statusAgility.text = playerStats[0].agility.ToString();
-                    statusStr.text = playerStats[0].strength.ToString();
-                    statusStamina.text = playerStats[0].stamina.ToString();
-                    statusCriticalChance.text = "Critical Chance: " + playerStats[0].critChance.ToString();
-                    statusBlock.text = "Block: " + playerStats[0].block.ToString();
-                    statusDodge.text = "Dodge: " + playerStats[0].dodge.ToString();
-                    statusWeaponEquipped.text = "Weapon equipped: " + playerStats[0].equippedWeapon;
-                    statusArmorEquipped.text = "Armor equipped: " + playerStats[0].equippedArmor;
+                    RefreshPlayerStatsUI();   
                 }
             } else
             {
                 windows[i].SetActive(false);
             } 
         }
+        itemCharacterChoiceMenu.SetActive(false);
+    }
+
+    public void RefreshPlayerStatsUI()
+    {
+        statusName.text = playerStats[0].charName;
+        statusPointsAvailable.text = "Points Available: " + playerStats[0].statsPointsAvailable.ToString();
+        statusLevel.text = "Level: " + playerStats[0].playerLevel.ToString();
+        statusExp.text = playerStats[0].getCurrentLevelExp()[0] + "/" + playerStats[0].getCurrentLevelExp()[1];
+        statusWeaponDamage.text = playerStats[0].weaponDamage.ToString();
+        statusPhysicalDef.text = playerStats[0].physicalDefense.ToString();
+        statusMagicalDef.text = playerStats[0].magicalDefense.ToString();
+        statusMP.text = playerStats[0].magicPower.ToString();
+        statusAgility.text = playerStats[0].agility.ToString();
+        statusStr.text = playerStats[0].strength.ToString();
+        statusStamina.text = playerStats[0].stamina.ToString();
+        statusCriticalChance.text = playerStats[0].critChance.ToString();
+        statusBlock.text = playerStats[0].block.ToString();
+        statusDodge.text = playerStats[0].dodge.ToString();
+        statusFirstHandEquipped.text = playerStats[0].equippedFirstHand;
+        statusSecondHandEquipped.text = playerStats[0].equippedSecondHand;
+        statusArmorEquipped.text = playerStats[0].equippedArmor;
     }
 
     public void ShowItems()
@@ -124,6 +136,15 @@ public class GameMenu : MonoBehaviour
                 itemButtons[i].buttonImage.gameObject.SetActive(true);
                 itemButtons[i].buttonImage.sprite = gameManager.getItemDetails(gameManager.itemsHeld[i]).itemSprite;
                 itemButtons[i].amountText.text = gameManager.numberOfItems[i].ToString();
+                Item item = gameManager.getItemDetails(gameManager.itemsHeld[i]);
+                CheckIfItemIsStillEquipped(item);
+                if (item.equipped)
+                {
+                    itemButtons[i].outline.enabled = true;
+                } else
+                {
+                    itemButtons[i].outline.enabled = false;
+                }
             } else
             {
                 itemButtons[i].buttonImage.gameObject.SetActive(false);
@@ -132,22 +153,35 @@ public class GameMenu : MonoBehaviour
         }
     }
 
+    private void CheckIfItemIsStillEquipped(Item item)
+    {
+        List<Item> equippedArray = new List<Item>() { GameManager.instance.getItemDetails(playerStats[0].equippedFirstHand), GameManager.instance.getItemDetails(playerStats[0].equippedSecondHand), GameManager.instance.getItemDetails(playerStats[0].equippedArmor)};
+        if (!equippedArray.Contains(item))
+        {
+            item.equipped = false;
+        } else
+        {
+            item.equipped = true;
+        }
+    }
+
     public void SelectItem(Item newItem)
     {
         activeItem = newItem;
-
+        
         switch(activeItem.itemType)
         {
             case Item.ItemType.Potion: useButtonText.text = "Use"; break;
             case Item.ItemType.QuestItem: useButtonText.text = "Use"; break;
-            case Item.ItemType.Armor: useButtonText.text = "Equip"; break;
-            case Item.ItemType.Weapon: useButtonText.text = "Equip"; break;
+            case Item.ItemType.Armor: useButtonText.text = activeItem.equipped ? "Unequip" : "Equip"; break;
+            case Item.ItemType.Weapon: useButtonText.text = activeItem.equipped ? "Unequip" : "Equip"; break;
             case Item.ItemType.Generic: useButtonText.text = "Use"; break;
+            case Item.ItemType.Scroll: useButtonText.text = "Use"; break;
         }
 
         itemName.text = activeItem.itemName;
         itemDescription.text = activeItem.description;
-        itemPrice.text = activeItem.price.ToString();
+        itemPrice.text = activeItem.price.ToString() + " Gold";
         Text[] statsArray = { stat1, stat2, stat3, stat4, stat5, stat6, stat7 };
         Dictionary<string, int> statsObject = new Dictionary<string, int>() {
             {"Weapon Damage", activeItem.weaponDamage },
@@ -170,20 +204,82 @@ public class GameMenu : MonoBehaviour
             statsArray[x].text = "";
         }
 
-        foreach (KeyValuePair<string, int> entry in statsObject)
+        if(activeItem.itemType == Item.ItemType.Armor || activeItem.itemType == Item.ItemType.Weapon || activeItem.itemType == Item.ItemType.Weapon2)
         {
-            if (statsObject[entry.Key] != 0)
+            foreach (KeyValuePair<string, int> entry in statsObject)
             {
-                for (int x = 0; x < statsArray.Length; x++)
+                if (statsObject[entry.Key] != 0)
                 {
-                    if (statsArray[x].text == "")
+                    for (int x = 0; x < statsArray.Length; x++)
                     {
-                        statsArray[x].text = entry.Key + ": " + entry.Value;
-                        break;
+                        if (statsArray[x].text == "")
+                        {
+                            statsArray[x].text = entry.Key + ": " + entry.Value;
+                            break;
+                        }
                     }
                 }
             }
         }
+        
+        itemCharacterChoiceMenu.SetActive(false);
+
     }
 
+    public void DiscardItem()
+    {
+        if(activeItem != null)
+        {
+            GameManager.instance.RemoveItem(activeItem.itemName);
+        }
+    }
+
+    public void HandleUseItem()
+    {
+        switch(useButtonText.text)
+        {
+            case "Use": UseItem(0); break;
+            case "Cast": OpenItemCharacterChoice(); break;
+            case "Equip": GameManager.instance.EquipItem(activeItem.itemName); break;
+            case "Unequip": GameManager.instance.UnEquip(activeItem.itemName); break;
+        }
+        ShowItems();
+        SelectItem(activeItem);
+    }
+
+    public void OpenItemCharacterChoice()
+    {
+        itemCharacterChoiceMenu.SetActive(true);
+        for(int i = 0; i < itemCharacterChoiceNames.Length; i++)
+        {
+            itemCharacterChoiceNames[i].text = GameManager.instance.playerStats[i].charName;
+            itemCharacterChoiceNames[i].transform.parent.gameObject.SetActive(GameManager.instance.playerStats[i].gameObject.activeInHierarchy);
+        }
+    }
+
+    public void CloseItemCharacterChoice()
+    {
+        itemCharacterChoiceMenu.SetActive(false);
+    }
+
+    public void UseItem(int selectChar)
+    {
+        activeItem.Use(selectChar);
+        CloseItemCharacterChoice();
+    }
+
+    public void assignPoint(int abilityPointType)
+    {
+        if(playerStats[0].statsPointsAvailable > 0) { 
+            switch (abilityPointType)
+            {
+                case 0: playerStats[0].strengthAbilityPoints++; playerStats[0].statsPointsAvailable--; break;
+                case 1: playerStats[0].staminaAbilityPoints++; playerStats[0].statsPointsAvailable--; break;
+                case 2: playerStats[0].magicPowerAbilityPoints++; playerStats[0].statsPointsAvailable--; break;
+                case 3: playerStats[0].agilityAbilityPoints++; playerStats[0].statsPointsAvailable--; break;
+            }
+        }
+        playerStats[0].calculateStats();
+        RefreshPlayerStatsUI();
+    }
 }

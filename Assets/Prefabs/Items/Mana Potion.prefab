@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1650ce3accefe00418d25fe2aa98bcc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemType: 3
   itemName: Mana Potion
   description: Restore 25 Mana
   price: 5
@@ -114,4 +114,4 @@ MonoBehaviour:
   weaponDamage: 0
   armorPhysicalDef: 0
   armorMagicDef: 0
-  integrity: 0
+  equipped: 0

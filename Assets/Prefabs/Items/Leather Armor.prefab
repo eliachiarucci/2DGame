@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1650ce3accefe00418d25fe2aa98bcc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 2
   itemName: Leather Armor
   description: 
   price: 5
@@ -111,7 +111,8 @@ MonoBehaviour:
   modifyStamina: 0
   modifyPhysicalDef: 0
   modifyMagicDef: 0
+  modifyCriticalChance: 0
   weaponDamage: 0
   armorPhysicalDef: 10
   armorMagicDef: 0
-  integrity: 0
+  equipped: 0

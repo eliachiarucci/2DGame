@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6799054845188096145}
   - component: {fileID: 1868573883256178537}
   - component: {fileID: 1576538606249645232}
+  - component: {fileID: 3932335770426039613}
   m_Layer: 5
   m_Name: Item Button
   m_TagString: Untagged
@@ -150,6 +151,22 @@ MonoBehaviour:
   buttonImage: {fileID: 7943049428256894552}
   amountText: {fileID: 2327708655901967084}
   buttonValue: 0
+  outline: {fileID: 3932335770426039613}
+--- !u!114 &3932335770426039613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279831503939940386}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.9056604, g: 0, b: 0.046651732, a: 1}
+  m_EffectDistance: {x: 6, y: 6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &6984147767374705917
 GameObject:
   m_ObjectHideFlags: 0

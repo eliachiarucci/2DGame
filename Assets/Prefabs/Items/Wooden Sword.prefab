@@ -111,7 +111,8 @@ MonoBehaviour:
   modifyStamina: 0
   modifyPhysicalDef: 0
   modifyMagicDef: 0
+  modifyCriticalChance: 0
   weaponDamage: 25
   armorPhysicalDef: 0
   armorMagicDef: 0
-  integrity: 0
+  equipped: 0
