@@ -21,6 +21,9 @@ public class GameMenu : MonoBehaviour
 
     public ItemButton[] itemButtons;
 
+    public Item activeItem;
+    public Text itemName, itemDescription, itemPrice, useButtonText, stat1, stat2, stat3, stat4, stat5, stat6, stat7;
+
     private void Start()
     {
         instance = this;
@@ -111,6 +114,7 @@ public class GameMenu : MonoBehaviour
 
     public void ShowItems()
     {
+        GameManager.instance.SortItems();
         for (int i = 0; i < itemButtons.Length; i++)
         {
             itemButtons[i].buttonValue = i;
@@ -124,6 +128,60 @@ public class GameMenu : MonoBehaviour
             {
                 itemButtons[i].buttonImage.gameObject.SetActive(false);
                 itemButtons[i].amountText.text = "";
+            }
+        }
+    }
+
+    public void SelectItem(Item newItem)
+    {
+        activeItem = newItem;
+
+        switch(activeItem.itemType)
+        {
+            case Item.ItemType.Potion: useButtonText.text = "Use"; break;
+            case Item.ItemType.QuestItem: useButtonText.text = "Use"; break;
+            case Item.ItemType.Armor: useButtonText.text = "Equip"; break;
+            case Item.ItemType.Weapon: useButtonText.text = "Equip"; break;
+            case Item.ItemType.Generic: useButtonText.text = "Use"; break;
+        }
+
+        itemName.text = activeItem.itemName;
+        itemDescription.text = activeItem.description;
+        itemPrice.text = activeItem.price.ToString();
+        Text[] statsArray = { stat1, stat2, stat3, stat4, stat5, stat6, stat7 };
+        Dictionary<string, int> statsObject = new Dictionary<string, int>() {
+            {"Weapon Damage", activeItem.weaponDamage },
+            {"HP", activeItem.modifyHP },
+            {"Mana", activeItem.modifyMana },
+            {"Magic Power", activeItem.modifyMP },
+            {"Strength", activeItem.modifyStrength },
+            {"Stamina", activeItem.modifyStamina },
+            {"Agility", activeItem.modifyAgility },
+            {"Dodge", activeItem.modifyDodge },
+            {"Block", activeItem.modifyBlock },
+            {"Physical Def", activeItem.modifyPhysicalDef },
+            {"Magic Def", activeItem.modifyMagicDef }
+        };
+
+
+
+        for (int x = 0; x < statsArray.Length; x++)
+        {
+            statsArray[x].text = "";
+        }
+
+        foreach (KeyValuePair<string, int> entry in statsObject)
+        {
+            if (statsObject[entry.Key] != 0)
+            {
+                for (int x = 0; x < statsArray.Length; x++)
+                {
+                    if (statsArray[x].text == "")
+                    {
+                        statsArray[x].text = entry.Key + ": " + entry.Value;
+                        break;
+                    }
+                }
             }
         }
     }

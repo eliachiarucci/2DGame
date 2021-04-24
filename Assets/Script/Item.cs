@@ -25,7 +25,6 @@ public class Item : MonoBehaviour
     public int modifyHP;
     public int modifyMana, modifyMP, modifyStrength, modifyDodge, modifyBlock, modifyAgility, modifyStamina, modifyPhysicalDef, modifyMagicDef;
     public int weaponDamage, armorPhysicalDef, armorMagicDef;
-    public int integrity;
 
     // Start is called before the first frame update
     void Start()
